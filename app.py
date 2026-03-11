@@ -25,6 +25,11 @@ def load_data():
     df['Tiempo_Total_Dias'] = (df['FECHA DE CIERRE TICKET FORMS'] - df['FECHA DEL REPORTE']).dt.total_seconds() / (24*3600)
     # Tiempo de pago (Pago - Realización)
     df['Tiempo_Pago_Dias'] = (df['FECHA PAGO'] - df['FECHA DE REALIZACIÓN DEL TRABAJO']).dt.total_seconds() / (24*3600)
+    # FILTRO DE LIMPIEZA DE DATOS (Ignorar errores de captura)
+    # Solo tomamos tickets donde el tiempo de operación sea lógico (0 a 365 días)
+    df = df[(df['Tiempo_Operacion_Dias'] >= 0) & (df['Tiempo_Operacion_Dias'] < 365)]
+    # Solo tomamos tickets donde la brecha admin sea lógica (0 a 365 días)
+    df = df[(df['Brecha_Admin_Dias'] >= 0) & (df['Brecha_Admin_Dias'] < 365)]
     
     # Extraer mes y año para la gráfica de tendencia de pagos
     df['Mes_Realizacion'] = df['FECHA DE REALIZACIÓN DEL TRABAJO'].dt.to_period('M').astype(str)
