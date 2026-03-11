@@ -85,7 +85,7 @@ st.markdown("---")
 # ==========================================
 # GRÁFICOS ANTERIORES
 # ==========================================
-st.header("Gráficos Generales Anteriores")
+st.header("Gráficos Generales Detallados")
 
 # Métricas Principales
 col1, col2, col3 = st.columns(3)
